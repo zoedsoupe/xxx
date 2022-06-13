@@ -38,6 +38,7 @@ jobs:
 
       - name: Update version in flake.nix and get old version
         run: |
+          echo GREP_CMD=grep -owE ${{ env.REGEX }} ${{ env.FLAKE_FILE }} >> $GITHUB_ENV
           echo OLD_VERSION=${${{ env.GREP_CMD }}} >> $GITHUB_ENV
           awk {sub(/${{ env.REGEX }}/, ${{ env.XXX_VERSION }}); print} ${{ env.FLAKE_FILE }} > ${{ env.FLAKE_FILE }}
 
