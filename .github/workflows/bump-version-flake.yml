@@ -6,6 +6,8 @@ on:
       - "v*.*.*"
 
 env:
+  REGEX: v[0-9]+\.[0-9]+\.[0-9]+
+  FLAKE: flake.nix
   GIT_AUTHOR_NAME: ${{ github.repository_owner }}
   GIT_AUTHOR_EMAIL: ${{ github.repository_owner }}@users.noreply.github.com
 
@@ -35,8 +37,8 @@ jobs:
 
       - name: Update version in flake.nix and get old version
         run: |
-          echo "OLD_VERSION=${grep -owE 'v[0-9]+\.[0-9]+\.[0-9]+' flake.nix}" >> $GITHUB_ENV
-          awk {sub(/v[0-9]+\.[0-9]+\.[0-9]+/, ${{ env.XXX_VERSION }}); print} flake.nix > flake.nix
+          echo OLD_VERSION=$(grep -owE ${{ env.REGEX }} ${{ env.FLAKE }}) >> $GITHUB_ENV
+          awk {sub(/${{ env.REGEX }}/, ${{ env.XXX_VERSION }}); print} ${{ env.FLAKE }} > ${{ env.FLAKE }}
 
       - name: Commit changes
         run: |
