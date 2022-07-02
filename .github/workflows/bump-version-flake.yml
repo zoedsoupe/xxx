@@ -54,5 +54,9 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
+          author: ${{ env.GIT_AUTHOR_NAME }} <${{ env.GIT_AUTHOR_EMAIL }}>
           title: 'xxx-flake: ${{ env.OLD_VERSION }} -> ${{ env.XXX_VERSION }}'
-          branch: auto-update/xxx-flake
+          branch: ${{ env.BRANCH_NAME }}
+          signoff: true
+          delete-branch: true
+          base: main
