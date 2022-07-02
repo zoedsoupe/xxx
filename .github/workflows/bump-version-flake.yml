@@ -51,6 +51,9 @@ jobs:
           git commit -m 'xxx-flake updated'
           git push origin ${{ env.BRANCH_NAME }}
 
+      - name: Go back to main
+        run: git checkout main
+
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
@@ -59,4 +62,3 @@ jobs:
           branch: ${{ env.BRANCH_NAME }}
           signoff: true
           delete-branch: true
-          base: main
