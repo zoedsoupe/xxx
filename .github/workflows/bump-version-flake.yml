@@ -32,12 +32,12 @@ jobs:
           fetch-depth: 1
 
       - name: Create update branch
-        run: |
-          git checkout -b auto-update/xxx-flake
+        run: git checkout -b auto-update/xxx-flake
 
       - name: Update version in flake.nix and get old version
         run: |
-          echo "OLD_VERSION=$(grep -owE ${{ env.REGEX }} ${{ env.FLAKE }})" >> $GITHUB_ENV
+          version=$(grep -owE ${{ env.REGEX }} ${{ env.FLAKE }})
+          echo "OLD_VERSION=$body" >> $GITHUB_ENV
           awk {sub(/${{ env.REGEX }}/, ${{ env.XXX_VERSION }}); print} ${{ env.FLAKE }} > ${{ env.FLAKE }}
 
       - name: Commit changes
