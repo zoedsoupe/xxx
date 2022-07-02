@@ -25,7 +25,7 @@
 
           xxx = rustPlatform.buildRustPackage {
             pname = "xxx";
-            version = "v0.1.0";
+            version = "v0.1.20";
             doCheck = true;
             src = ./.;
             checkInputs = [ rustfmt clippy ];
