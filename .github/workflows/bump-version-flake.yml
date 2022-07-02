@@ -37,7 +37,7 @@ jobs:
           echo "OLD_VERSION=$version" >> $GITHUB_ENV
 
       - name: Update version in flake.nix
-        run: sed -i "s/$XXXX_VERSION/$OLD_VERSION/g" ${{ env.FLAKE }}
+        run: sed -i "s/$XXX_VERSION/$OLD_VERSION/g" ${{ env.FLAKE }}
 
       - name: Create update branch
         run: git checkout -b auto-update/xxx-flake
