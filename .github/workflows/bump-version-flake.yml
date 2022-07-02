@@ -37,26 +37,13 @@ jobs:
           export version=$(grep -owE ${{ env.REGEX }} ${{ env.FLAKE }})
           echo "OLD_VERSION=$version" >> $GITHUB_ENV
 
-      - name: Create update branch
-        run: git checkout -b ${{ env.BRANCH_NAME }}
-
       - name: Update version in flake.nix
         run: sed -i "s/$OLD_VERSION/$XXX_VERSION/g" ${{ env.FLAKE }}
-
-      - name: Commit changes
-        run: |
-          git config user.name ${{ env.GIT_AUTHOR_NAME }}
-          git config user.email ${{ env.GIT_AUTHOR_EMAIL }} 
-          git add .
-          git commit -m 'xxx-flake updated'
-          git push origin ${{ env.BRANCH_NAME }}
-
-      - name: Go back to main
-        run: git checkout main
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
         with:
+          commit-message: "update: flake package version"
           author: ${{ env.GIT_AUTHOR_NAME }} <${{ env.GIT_AUTHOR_EMAIL }}>
           title: 'xxx-flake: ${{ env.OLD_VERSION }} -> ${{ env.XXX_VERSION }}'
           branch: ${{ env.BRANCH_NAME }}
