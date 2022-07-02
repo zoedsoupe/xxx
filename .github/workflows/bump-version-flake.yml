@@ -36,8 +36,8 @@ jobs:
 
       - name: Update version in flake.nix and get old version
         run: |
-          version=$(grep -owE ${{ env.REGEX }} ${{ env.FLAKE }})
-          echo "OLD_VERSION=$body" >> $GITHUB_ENV
+          version=$(grep -owE "v[0-9]+\.[0-9]+\.[0-9]+" flake.nix)
+          echo "OLD_VERSION=$version" >> $GITHUB_ENV
           awk {sub(/${{ env.REGEX }}/, ${{ env.XXX_VERSION }}); print} ${{ env.FLAKE }} > ${{ env.FLAKE }}
 
       - name: Commit changes
