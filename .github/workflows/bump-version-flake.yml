@@ -36,14 +36,16 @@ jobs:
           export version=$(grep -owE ${{ env.REGEX }} ${{ env.FLAKE }})
           echo "OLD_VERSION=$version" >> $GITHUB_ENV
 
+      - name: Create update branch
+        run: git checkout -b auto-update/xxx-flake
+        
       - name: Update version in flake.nix
         run: sed -i "s/$XXX_VERSION/$OLD_VERSION/g" ${{ env.FLAKE }}
 
-      - name: Create update branch
-        run: git checkout -b auto-update/xxx-flake
-
       - name: Commit changes
         run: |
+          git config user.name ${{ env.GIT_AUTHOR_NAME }}
+          git config user.email ${{ env.GIT_AUTHOR_EMAIL }} 
           git add .
           git commit -m 'xxx-flake updated'
           git push
