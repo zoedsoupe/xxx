@@ -36,9 +36,11 @@ jobs:
           export version=$(grep -owE ${{ env.REGEX }} ${{ env.FLAKE }})
           echo "OLD_VERSION=$version" >> $GITHUB_ENV
 
-      - name: Update version in flake.nix and get old version
-        run: |
-          awk {sub(/${{ env.REGEX }}/, ${{ env.XXX_VERSION }}); print} ${{ env.FLAKE }} > ${{ env.FLAKE }}
+      - name: Update version in flake.nix
+        run: sed -i "s/$XXXX_VERSION/$OLD_VERSION/g" ${{ env.FLAKE }}
+
+      - name: Create update branch
+        run: git checkout -b auto-update/xxx-flake
 
       - name: Create update branch
         run: git checkout -b auto-update/xxx-flake
