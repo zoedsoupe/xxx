@@ -38,7 +38,7 @@ jobs:
 
       - name: Create update branch
         run: git checkout -b auto-update/xxx-flake
-
+        
       - name: Update version in flake.nix
         run: sed -i "s/$XXX_VERSION/$OLD_VERSION/g" ${{ env.FLAKE }}
 
