@@ -42,9 +42,6 @@ jobs:
       - name: Create update branch
         run: git checkout -b auto-update/xxx-flake
 
-      - name: Create update branch
-        run: git checkout -b auto-update/xxx-flake
-
       - name: Commit changes
         run: |
           git add .
